@@ -72,6 +72,9 @@ def delete_user():
     if villain:
         db.session.delete(villain)
         db.session.commit()
+        return render_template("villain.html", villains=Villain.query.all())
+    else:
+        return render_template("deletevillain.html", errors=["Oops! That villain doesn't exist!"])
 
 # Run the flask server
 if __name__ == "__main__":
