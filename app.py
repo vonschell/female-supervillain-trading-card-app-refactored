@@ -39,7 +39,9 @@ def delete_villain():
 @app.route("/addVillain", methods=["POST"])
 def add_user():
     errors = []
-    name = request.form.get("name")
+    name = request.form.get("name").strip() #Remove Whitespace
+    villain = Villain.query.filter(Villain.name.ilike(name)).first() #Case-insensitive match
+    
     if not name:
         errors.append("Oops! Looks like you forgot a name!")
     description = request.form.get("description")
