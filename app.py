@@ -41,7 +41,7 @@ def delete_villain():
 def add_user():
     errors = []
     name = request.form.get("name").strip() #Remove Whitespace
-    villain = Villain.query.filter(Villain.name.ilike(name)).first() #Case-insensitive match
+    villain = Villain.query.filter(func.lower(Villain.name) == name.lower()).first() #Case-insensitive match
     
     if not name:
         errors.append("Oops! Looks like you forgot a name!")
@@ -70,7 +70,7 @@ def add_user():
     
 @app.route("/deleteVillain", methods=["POST"])
 def delete_user(): 
-    name = request.form.get("name")
+    name = request.form.get("name").strip().lower()
     villain = Villain.query.filter(func.lower(Villain.name) == name.lower()).first()
     if villain:
         db.session.delete(villain)
