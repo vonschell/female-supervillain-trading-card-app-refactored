@@ -70,7 +70,7 @@ def add_user():
 @app.route("/deleteVillain", methods=["POST"])
 def delete_user(): 
     name = request.form.get("name")
-    villain = Villain.query.filter_by(name=name).first()
+    villain = Villain.query.filter(func.lower(Villain.name) == func.lower(name)).first()
     if villain:
         db.session.delete(villain)
         db.session.commit()
