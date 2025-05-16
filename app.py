@@ -54,7 +54,6 @@ def add_user():
     url = request.form.get("url")
     if not url:
         errors.append("Oops! Looks like you forgot an image!")
-    villain = Villain.query.filter_by(name=name).first()
     if villain:
         errors.append("Oops! A villain with that name already exists!")
 
@@ -70,8 +69,8 @@ def add_user():
     
 @app.route("/deleteVillain", methods=["POST"])
 def delete_user(): 
-    name = request.form.get("name").strip().lower()
-    villain = Villain.query.filter(func.lower(Villain.name) == name.lower()).first()
+    name = request.form.get("name").strip()
+    villain = Villain.query.filter(func.lower(Villain.name) == func.lower(name)).first()
     if villain:
         db.session.delete(villain)
         db.session.commit()
