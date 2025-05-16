@@ -37,6 +37,10 @@ def add_villain():
 def delete_villain():
     return render_template("deletevillain.html", errors=[])
 
+@app.route("/list")
+def list_villains():
+    return "<br>".join([f" '{v.name}' " for v in Villain.query.all()])
+
 @app.route("/addVillain", methods=["POST"])
 def add_user():
     errors = []
